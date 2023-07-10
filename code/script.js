@@ -1,148 +1,127 @@
-let nombre;
-
-do {
-    nombre = prompt("Ingrese su nombre:");
-    if (nombre && !isNaN(nombre)) {
-        alert("Por favor, ingrese un nombre válido.");
-    } else if (!nombre) {
-        alert("No ingresaste ningún nombre. ¡Empecemos de nuevo!");
-    }
-} while (!nombre || !isNaN(nombre));
-
-alert("¡Bienvenido(a), " + nombre + "!");
-
-let numberParsed;
-
-while (true) {
-    let usuarioEdad = prompt("Ingresa tu edad");
-    numberParsed = parseInt(usuarioEdad);
-
-    if (isNaN(numberParsed)) {
-        alert("Por favor, ingresa una edad válida.");
-        continue;
-    }
-
-    if (numberParsed < 18) {
-        alert("Eres menor de edad, pero puedes seguir consultando precios.");
-    }
-
-    break;
-}
-
-solicitarTipoAuto();
-
-function solicitarTipoAuto() {
-    const tipoAuto = prompt("Ingrese el tipo de auto que desea comprar (Automovil, Camioneta Pick Up, Microbus):").toLowerCase();
-    const presupuesto = parseInt(prompt("Ingrese su presupuesto:"));
-
-    const autos = [
-        { tipo: "automovil", precio: 15000 },
-        { tipo: "camioneta pick up", precio: 30000 },
-        { tipo: "microbus", precio: 37000 }
-    ];
-
-    let autoSeleccionado;
-
-    switch (tipoAuto) {
-        case "automovil":
-            autoSeleccionado = autos[0];
-            break;
-
-        case "camioneta pick up":
-            autoSeleccionado = autos[1];
-            break;
-
-        case "microbus":
-            autoSeleccionado = autos[2];
-            break;
-
-        default:
-            mostrarError();
-            return;
-    }
-
-    comprarAuto(autoSeleccionado, presupuesto);
-}
-
-function mostrarError() {
-    alert("El tipo de auto ingresado no es válido. Por favor, seleccione entre Automovil, Camioneta Pick Up o Microbus.");
-    alert("Intentemos de nuevo");
-    solicitarTipoAuto();
-}
-
-function comprarAuto(auto, presupuesto) {
-    if (presupuesto >= auto.precio) {
-        alert("Felicidades, " + nombre + "! Usted puede comprar un " + auto.tipo + ". ¡Acérquese a nuestra agencia para elegir su modelo!");
-        return;
-    }
-
-    const faltante = auto.precio - presupuesto;
-
-    if (faltante > 0) {
-        const aceptaFinanciamiento = prompt("Su presupuesto no alcanza. Le faltan $" + faltante + ". ¿Aceptaría el financiamiento? (Si/No):").toLowerCase();
-
-        if (aceptaFinanciamiento === "si") {
-            let plazoFinanciamiento = 4;
-            let tasaInteres = 3;
-
-            if (faltante <= 3000) {
-                plazoFinanciamiento = 1;
-                tasaInteres = 2.5;
+document.addEventListener("DOMContentLoaded", function () {
+    const nombreInput = document.getElementById("fname");
+    const apellidoInput = document.getElementById("lname");
+    const tipoAutoSelect = document.getElementById("tipoAuto");
+    const precioAutoInput = document.getElementById("precioAuto");
+    const presupuestoInput = document.getElementById("presupuesto");
+    const compraMessage = document.getElementById("compraMessage");
+    const aceptaFinanciamientoInput = document.getElementById("financiamiento");
+  
+    function startAd() {
+      let tlMain = gsap.timeline();
+  
+      (function init() {
+        const noName = document.getElementById("noName");
+        const welcome = document.getElementById("welcome");
+        noName.style.display = "none";
+        welcome.style.display = "none";
+        financiado.style.display = "none";
+        tipoAutoHolder.style.display = "none";
+  
+        animation();
+      })();
+  
+      function firstStage() {
+        return function () {
+          const submitButton = document.querySelector("#nameHolder input[type='submit']");
+          const noName = document.getElementById("noName");
+          let hideNoNameTimeout;
+  
+          submitButton.addEventListener("click", function (event) {
+            event.preventDefault();
+          
+            const nombre = nombreInput.value;
+            const apellido = apellidoInput.value;
+          
+            if (nombre === "" || apellido === "") {
+              noName.style.display = "block";
+            } else {
+              welcome.style.display = "block";
+              welcome.innerHTML = "Bienvenido " + nombre + " " + apellido;
+              tipoAutoHolder.style.display = "grid"; // Mostrar tipoAutoHolder como grid
             }
+          
+            nombreInput.addEventListener('input', checkFormValidity);
+            apellidoInput.addEventListener('input', checkFormValidity);
+          
+            function checkFormValidity() {
+              if (nombreInput.value.trim() !== "" && apellidoInput.value.trim() !== "") {
+                tipoAutoHolder.style.display = "grid"; // Conservar distribución como grid
+              } else {
+                tipoAutoHolder.style.display = "none";
+              }
+            }
+          });
+          
+  
+          nameHolder.addEventListener("click", function () {
+            clearTimeout(hideNoNameTimeout);
+            hideNoNameTimeout = setTimeout(function () {
+              noName.style.display = "none";
+            }, 1000);
+          });
+        };
 
-            alert("Perfecto, " + nombre + ". Usted puede acercarse a nuestra sucursal para completar el proceso de financiamiento.");
-            alert("El plazo de financiamiento será de " + plazoFinanciamiento + " años y la tasa de interés será del " + tasaInteres + "% anual.");
-        } else if (aceptaFinanciamiento === "no") {
-            alert("Gracias por su tiempo, " + nombre + ". De igual manera dejanos tus datos para tenerte en nuestra base.");
-        } else {
-            alert("Opción inválida. Gracias por su tiempo, " + nombre + ".");
-        }
+      }
+  
+      function animation() {
+        const container = document.getElementById("container");
+        tlMain
+          .set(container, { visibility: "visible" })
+          .add(firstStage(), "+=0");
+      }
+  
+      animation();
     }
-}
 
+    tipoAutoSelect.addEventListener("change", function () {
+        const tipoAuto = tipoAutoSelect.value;
+        let precio = "";
+      
+        if (tipoAuto === "automovil") {
+          precio = "15,000";
+        } else if (tipoAuto === "camioneta") {
+          precio = "30,000";
+        } else if (tipoAuto === "microbus") {
+          precio = "37,000";
+        }
+      
+        if (precio) {
+          precioAuto.innerText = "$" + precio;
+        } else {
+          precioAuto.innerText = "";
+        }
+      });
 
-//Second Phase
-const nombreMarca = prompt("Ingrese La Marca:\n1. Toyota\n2. Nissan\n3. Ford").toLowerCase();
-
-let opcionSeleccionada;
-
-switch (nombreMarca) {
-  case "1":
-  case "toyota":
-    opcionSeleccionada = "Toyota";
-    alert("Escogiste la Marca Toyota");
-    break;
-  case "2":
-  case "nissan":
-    opcionSeleccionada = "Nissan";
-    alert("Escogiste la Marca Nissan");
-    break;
-  case "3":
-  case "ford":
-    opcionSeleccionada = "Ford";
-    alert("Escogiste la Marca Ford");
-    break;
-  default:
-    opcionSeleccionada = "Opción inválida";
-    break;
-}
-
-const persona = {};
-
-const datosIngresados = prompt("Ingrese estos datos nuevamente para proceso de compra\n1. Nombre\n2. Apellido\n3. Edad\n4. Numero de Telefono").toLowerCase();
-
-const valores = datosIngresados.split(",");
-
-
-persona.nombre = valores[0];
-persona.apellido = valores[1];
-persona.edad = valores[2];
-persona.numeroTelefono = valores[3];
-
-var msge1 = "Gracias, te tendremos en nuestra base con estos datos:" +
-            "\nNombre: " + persona.nombre +
-            "\nApellido: " + persona.apellido +
-            "\nEdad: " + persona.edad +
-            "\nNumero de Telefono: " + persona.numeroTelefono;
-
-alert(msge1);
+      presupuestoInput.addEventListener("input", function () {
+        const presupuesto = Number(presupuestoInput.value);
+        const precioAuto = Number(precioAutoInput.textContent.replace(/\D/g, "")); // Obtener el precio sin el signo de dólar
+        
+        if (presupuesto >= precioAuto) {
+          compraMessage.innerHTML = "¡Felicidades " + nombreInput.value + "!" +" Puedes comprar el tipo auto de seleccionado.";
+          financiado.style.display = "none";
+        } else {
+          const faltante = precioAuto - presupuesto;
+          let mensaje = "Faltan $" + faltante.toLocaleString() + " para alcanzar el precio del auto.";
+          financiado.style.display = "block";
+        
+          if (aceptaFinanciamientoInput.checked) {
+            mensaje += " ¿Aceptas financiamiento?";
+          }
+        
+          compraMessage.innerHTML = mensaje;
+        }
+      });
+      
+      aceptaFinanciamientoInput.addEventListener("change", function () {
+        const presupuesto = Number(presupuestoInput.value);
+        const precioAuto = Number(precioAutoInput.textContent.replace(/\D/g, "")); // Obtener el precio sin el signo de dólar
+        
+        if (presupuesto < precioAuto && aceptaFinanciamientoInput.checked) {
+            compraMessage.innerHTML += " Aceptas financiamiento?";
+        }
+      });
+  
+    startAd();
+  });
+  

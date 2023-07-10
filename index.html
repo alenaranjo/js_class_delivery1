@@ -1,14 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Practica</title>
+    <link rel="stylesheet" href="style.css">
+    <title>Entrega de desafío</title>
+
 </head>
+
 <body>
-    <h1>Entrega de Clase 2</h1>
-    
+    <div id="container" style="visibility: hidden;">
+        <div id="nameHolder">
+            <div>
+                <label for="fname">Nombre:</label><br>
+            <input type="text" id="fname" name="fname" value="" placeholder="Nombre"><br>
+            </div>
+            <div>
+                <label for="lname">Apellido:</label><br>
+            <input type="text" id="lname" name="lname" value="" placeholder="Apellido"><br><br>
+            </div>
+            
+            <input type="submit" value="Aplicar">
+
+            <div id="noName">
+                <p>Ingresa Nombre y Apellido</p>
+            </div>
+            <div id="welcome">
+                <p></p>
+            </div>
+        </div>
+
+        <form id="tipoAutoHolder">
+            <label for="tipoAuto">Tipo de Auto:</label>
+            <select id="tipoAuto" name="tipoAuto">
+                <option value="">Seleccionar</option>
+                <option value="automovil">Automóvil</option>
+                <option value="camioneta">Camioneta Pick Up</option>
+                <option value="microbus">Microbús</option>
+            </select>
+
+            <div id="precioContainer">
+                <label for="precioAuto">Precio:</label>
+                <p id="precioAuto"></p>
+            </div>
+
+            <div id="presupuestoContainer">
+                <label for="presupuesto">Presupuesto:</label><br>
+                <input type="number" id="presupuesto" name="presupuesto" placeholder="Presupuesto"><br><br>
+            </div>
+
+            <div id="compraContainer">
+                <p id="compraMessage"></p>
+                <div id="financiado">
+                    <input type="checkbox" id="financiamiento" name="financiamiento">
+                    <label for="financiamiento">Acepto financiamiento</label>
+                </div>
+                
+            </div>
+        </form>
+
+    </div>
+
+
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.0.2/gsap.min.js"></script>
 <script src="code/script.js"></script>
+
 </html>
