@@ -54,12 +54,33 @@
             <div id="compraContainer">
                 <p id="compraMessage"></p>
                 <div id="financiado">
-                    <input type="checkbox" id="financiamiento" name="financiamiento">
+                    <button button="button" id="financiamiento" name="financiamiento">Aplicar</button>
                     <label for="financiamiento">Acepto financiamiento</label>
                 </div>
                 
             </div>
         </form>
+
+        <div id="gallery" class="hidden">
+            <p id="montoFinanciado"></p>
+            <div id="imgs"></div>
+            
+            <form id="myForm">
+                <label for="fname">Nombre:</label><br>
+                <input type="text" id="fname" name="fname" placeholder="Nombre"><br><br>
+              
+                <label for="lname">Apellido:</label><br>
+                <input type="text" id="lname" name="lname" placeholder="Apellido"><br><br>
+              
+                <label for="age">Edad:</label><br>
+                <input type="text" id="age" name="age" placeholder="Edad"><br><br>
+              
+                <label for="postalCode">Código Postal:</label><br>
+                <input type="text" id="postalCode" name="postalCode" placeholder="Código Postal"><br><br>
+              
+                <input type="submit" value="Enviar">
+              </form>
+        </div>
 
     </div>
 

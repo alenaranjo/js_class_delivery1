@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
           nameHolder.addEventListener("click", function () {
             clearTimeout(hideNoNameTimeout);
             hideNoNameTimeout = setTimeout(function () {
-              noName.style.display = "none";
+              gsap.to(noName,{duration:.3, autoAlpha:0});
             }, 1000);
           });
         };
@@ -120,6 +120,50 @@ document.addEventListener("DOMContentLoaded", function () {
         if (presupuesto < precioAuto && aceptaFinanciamientoInput.checked) {
             compraMessage.innerHTML += " Aceptas financiamiento?";
         }
+      });
+
+      const nameHolder = document.getElementById("nameHolder");
+      const tipoAutoHolder = document.getElementById("tipoAutoHolder");
+
+      financiamiento.addEventListener("click", function () {
+        nameHolder.remove();
+        tipoAutoHolder.remove();
+        gallery.style.display = "block";
+
+        const precioAuto = Number(precioAutoInput.textContent.replace(/[^0-9]/g, ""));
+        const presupuesto = Number(presupuestoInput.value);
+        const faltante = precioAuto - presupuesto;
+        let montoFinanciado = 0;
+        let tasaInteresAnual = 0;
+
+        if (faltante < 3000) {
+          montoFinanciado = faltante * 0.025;
+          tasaInteresAnual = 2.5;
+        } else {
+          montoFinanciado = precioAuto * 0.04;
+          tasaInteresAnual = 4;
+        }
+
+        const montoFinanciadoElement = document.getElementById("montoFinanciado");
+        montoFinanciadoElement.innerHTML = "Te faltan $" + faltante.toLocaleString() + ". El monto a financiar es de $" + montoFinanciado.toLocaleString() + " con una tasa de interés anual del " + tasaInteresAnual + "%";
+
+        const form = document.getElementById("myForm");
+
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+      
+          const nombre = document.getElementById("fname").value;
+          const apellido = document.getElementById("lname").value;
+          const edad = document.getElementById("age").value;
+          const codigoPostal = document.getElementById("postalCode").value;
+      
+          const usuario = {
+            nombre: nombre,
+            apellido: apellido,
+            edad: edad,
+            codigoPostal: codigoPostal
+          };
+        });
       });
   
     startAd();

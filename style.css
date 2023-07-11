@@ -314,6 +314,13 @@ html {
   #precioContainer p {
     margin: 0;
   }
+
+  #gallery{
+    position: relative;
+    width: 1000px;
+    height: 800px;
+    background-color: #551294;
+  }
   
 /*------------------ JS Switching Classes ------------------- */
 .hidden {
